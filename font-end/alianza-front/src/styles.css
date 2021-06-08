@@ -1,0 +1,15 @@
+/* You can add global styles to this file, and also import other style files */
+.tittle{
+    font-family: Helvetica, Arial;
+	padding: 15px;
+	color: #8db4db;
+}
+
+.mt-10 {
+   margin-top: 10px;
+}
+
+.color-back-popup{
+    background-color: rgb(173, 197, 250);
+}
+

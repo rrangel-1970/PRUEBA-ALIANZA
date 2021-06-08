@@ -1,0 +1,167 @@
+<header>
+    <img src="../../../assets/images/logo_alianza.png" />
+</header>
+
+<div class="container">
+
+    <div style="width: 20%; float:left">
+        <div class="form-group">
+            <span class="col-md-1 col-md-offset-2 text-center"><i class="fa fa-user bigicon"></i></span>
+            <div class="col-md-8">
+                <legend class="text-center header">Client</legend> </div>
+        </div>
+
+        <nav id="nav">
+            <ul>
+                <li><a [routerLink]="">Client Look History</a></li>
+                <li><a [routerLink]="">Emergency PIN Configuration</a></li>
+                <li><a [routerLink]="">Emergency PIN History</a></li>
+            </ul>
+        </nav>
+    </div>
+    <div style="width: 80%; float:right">
+        <div style="width: 100%;">
+
+            <div>
+                <div class="row col-12 p-3 border-bottom justify-content-left">
+                    <button type="button" class="btn btn-primary mr-2"
+                        data-toggle="modal"  data-target="#clienteModal">New</button>
+
+                    <button  class="btn btn-primary mr-2" type="button" (click)="exportToCsv()">Export</button>
+                </div>
+
+            </div>
+
+            <div class="row mt-10">
+                <div class="row">
+                    <div class="col-6">   
+                        <input pattern="^[A-Za-z]$" type="text" name="strbuscar" id="strbuscar" class="form-control" [(ngModel)]="strBusqueda"
+                        (keypress)="validarCamposAlpha($event)" required/>
+                    </div>
+                    <div class="col-6">
+                        <button  class="btn btn-primary" type="button" (click)="buscarCliente()">Search</button>
+                    </div> 
+                </div>
+            </div>
+
+            <div class="row" >
+                <label class="text-center tittle" >Clients</label>
+            </div>     
+
+            <div *ngIf="swMostrarExito" class="alert alert-success alert-dismissible fade show">
+                {{result.msgRespuesta}}
+            </div>
+            <div *ngIf="swMostrarExito == false" class="alert alert-danger alert-dismissible fade show">
+                {{result.msgRespuesta}}
+            </div>
+
+            <div class="row">
+                <div class="col-12">
+                    <table class="table table-hover">
+                        <thead class="gris">
+                            <tr>
+                                <th>Shared Key</th>
+                                <th>Business ID</th>
+                                <th>E-mail</th>
+                                <th>Phone</th>
+                                <th>Data Added</th>
+                                <th>Accion</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            <tr *ngFor="let clt of clientes">
+                                <td>{{clt.id}} </td>
+                                <td>{{clt.name}}</td>
+                                <td>{{clt.email}}</td>
+                                <td>{{clt.phone}}</td>
+                                <td>{{clt.starDate | date:'dd/MM/yyyy'}}</td>
+                                <td class="text-center">
+                                    <button class="btn btn-sm rojo-davivienda" data-toggle="modal">
+                                        <i class="fa fa-pencil"></i></button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- The Modal -->
+            <div class="modal" id="clienteModal" data-backdrop="static">
+                <div class="modal-dialog">
+                <div class="modal-content" style="background-color:lightblue">
+            
+                    <!-- Modal Header -->
+                    <div class="modal-header">
+                    <h4 class="modal-title">Create New Client</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+            
+                    <!-- Modal body -->
+                    <div class="modal-body">
+                        <form action="/" method="post" >
+                          <div class="row">
+                            <div class="col-6">
+                                <label for="name">Name:</label>
+                            </div> 
+                            <div>   
+                                <input pattern="[a-zA-Z]{1,}$" type="text" name="name" id="name" class="form-control" [(ngModel)]="cliente.name"
+                                (keypress)="validarCamposAlpha($event)" required/>
+                            </div>
+                          </div>
+                          
+                          <div class="row mt-10">
+                            <div class="col-6">
+                                <label for="name">Phone:</label>
+                            </div> 
+                            <div>   
+                                <input pattern="[0-9]$" type="text" name="phone" id="phone" class="form-control" [(ngModel)]="cliente.phone"
+                                (keypress)="validarCamposNumber($event)" required/>
+                            </div>
+                          </div>
+
+                          <div class="row mt-10">
+                            <div class="col-6">
+                                <label for="name">email:</label>
+                            </div> 
+                            <div>   
+                                <input  type="email" name="email" id="email" class="form-control" [(ngModel)]="cliente.email"
+                                (keypress)="validarCamposEmail($event)" required/>
+                            </div>
+                          </div>
+
+                          <div class="row mt-10"  >
+                            <div class="col-6">
+                                <label for="startDate">Start Date:</label>
+                            </div> 
+                            <div>   
+                                <input type="date" name="startDate" id="startDate" class="form-control" [(ngModel)]="cliente.starDate"
+                                required/>
+                            </div>
+                          </div>
+
+                          <div class="row mt-10"  >
+                            <div class="col-6">
+                                <label for="endDate">Start Date:</label>
+                            </div> 
+                            <div>   
+                                <input type="date" name="endDate" id="endDate" class="form-control" [(ngModel)]="cliente.endDate"
+                                required/>
+                            </div>
+                          </div>
+
+                        </form>
+                    </div>
+            
+                    <!-- Modal footer -->
+                    <div class="modal-footer">                    
+                       <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="adicionar()">OK</button>
+                    </div>
+            
+                </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
